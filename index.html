@@ -133,23 +133,46 @@ a.view[aria-current="page"]{color:var(--ink);border-color:var(--c1)}
 .wstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .wstats div{display:flex;flex-direction:column;gap:2px}
 .wstats b{font-family:var(--display);font-weight:800;font-size:22px;font-variant-numeric:tabular-nums}
-.knobwrap{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px}
-.knob{position:relative;width:min(68vw,290px);aspect-ratio:1;border-radius:50%;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;flex:none}
+.dev{position:relative;margin-top:4px;padding:30px 12px 14px;border-radius:18px;background:#e7e0d3;display:flex;flex-direction:column;align-items:center;gap:12px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 0 rgba(0,0,0,.05),0 1px 0 rgba(255,255,255,.6)}
+.dev::before{content:"";position:absolute;inset:0;border-radius:inherit;background-image:var(--grain-d);opacity:.1;pointer-events:none}
+.screw{position:absolute;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fbf8f2 0,#b9b1a4 55%,#7d756a 100%);box-shadow:0 1px 0 rgba(255,255,255,.8),inset 0 0 0 1px rgba(0,0,0,.18)}
+.screw::after{content:"";position:absolute;left:2px;right:2px;top:50%;height:1.5px;margin-top:-.75px;background:#6d665b;border-radius:1px}
+.s1{top:10px;left:10px}.s1::after{transform:rotate(35deg)}.s2{top:10px;right:10px}.s2::after{transform:rotate(-20deg)}
+.s3{bottom:10px;left:10px}.s3::after{transform:rotate(80deg)}.s4{bottom:10px;right:10px}.s4::after{transform:rotate(10deg)}
+.devlabel{position:absolute;top:9px;left:28px;right:28px;display:flex;justify-content:space-between;color:var(--muted);font-size:9.5px}
+.odo{display:flex;align-items:flex-end;gap:3px;padding:7px 9px;border-radius:9px;background:#151412;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.8),0 -1px 0 rgba(0,0,0,.12)}
+.wheel{position:relative;width:28px;height:42px;overflow:hidden;border-radius:3px;background:#22201d}
+.wheel.red{background:var(--c1)}
+.wheel.lead .strip{opacity:.25}
+.wheel::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,0) 32%,rgba(255,255,255,.06) 50%,rgba(0,0,0,0) 68%,rgba(0,0,0,.75))}
+.strip{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;will-change:transform}
+.strip span{height:42px;line-height:42px;text-align:center;color:#f3ede2;font:600 26px var(--mono);font-variant-numeric:tabular-nums}
+.odot{color:#f3ede2;font:600 26px var(--mono);line-height:30px;width:8px;text-align:center}
+.odounit{color:#8d867b;font-family:var(--mono);font-size:10px;text-transform:uppercase;margin-left:4px;align-self:center}
+.knobwrap{display:flex;align-items:center;justify-content:center;gap:4px}
+.knob{position:relative;width:min(66vw,280px);aspect-ratio:1;border-radius:50%;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;flex:none}
 .knob.grab{cursor:grabbing}
-.knob:focus-visible{outline:3px solid var(--c1);outline-offset:4px}
+.knob:focus-visible{outline:2px solid var(--c1);outline-offset:4px}
 .knob canvas{position:absolute;inset:0;width:100%;height:100%}
-.kptr{position:absolute;top:-2px;left:50%;width:0;height:0;margin-left:-8px;border-left:8px solid transparent;border-right:8px solid transparent;border-top:13px solid var(--c1);z-index:2}
-.kcap{position:absolute;inset:25%;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--on);overflow:hidden;
-  background:radial-gradient(70% 70% at 30% 25%, var(--c2), transparent 70%), var(--c1);
-  box-shadow:0 14px 30px rgba(20,19,18,.28), inset 0 -6px 14px rgba(0,0,0,.25), inset 0 4px 10px rgba(255,255,255,.25)}
-.kcap::after{content:"";position:absolute;inset:0;background-image:var(--grain-d),var(--grain-l);opacity:.5;mix-blend-mode:multiply;pointer-events:none}
-.kcap b{position:relative;z-index:1;font-family:var(--display);font-weight:800;font-size:clamp(30px,10vw,44px);line-height:1;font-variant-numeric:tabular-nums}
-.kcap span{position:relative;z-index:1;font-family:var(--mono);font-size:10px;text-transform:uppercase;opacity:.85}
-.kgrip{position:absolute;inset:0;z-index:1;pointer-events:none}
-.kgrip::before{content:"";position:absolute;top:5%;left:50%;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--on);opacity:.85}
-.kstep{width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:transparent;color:var(--ink);font:700 22px var(--body);cursor:pointer;flex:none}
-.kstep:active{transform:scale(.9)}
-.khelp{text-align:center;color:var(--muted);margin:2px 0 0}
+.needle{position:absolute;top:-6px;left:50%;width:2px;height:44px;margin-left:-1px;background:var(--c1);border-radius:1px;z-index:3;box-shadow:0 0 0 .5px rgba(0,0,0,.1)}
+.needle::before{content:"";position:absolute;top:0;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--c1)}
+.kwell{position:absolute;inset:24%;border-radius:50%;background:#cfc6b6;box-shadow:inset 0 4px 10px rgba(0,0,0,.4),inset 0 -1px 2px rgba(255,255,255,.5),0 1px 0 rgba(255,255,255,.8)}
+.kbody{position:absolute;inset:27%;border-radius:50%;box-shadow:0 22px 26px -10px rgba(20,19,18,.55),0 6px 10px rgba(20,19,18,.3)}
+.knurl{position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(#1b1a18 0deg 2.2deg,#45413c 2.2deg 3.4deg,#1b1a18 3.4deg 4.5deg)}
+.knurl::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 50%,transparent 62%,rgba(0,0,0,.35) 100%)}
+.kbody::after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;background:conic-gradient(from 210deg,rgba(255,255,255,0),rgba(255,255,255,.28) 35deg,rgba(255,255,255,0) 80deg,rgba(255,255,255,0) 180deg,rgba(255,255,255,.14) 220deg,rgba(255,255,255,0) 270deg)}
+.kface{position:absolute;inset:11%;border-radius:50%;
+  background:conic-gradient(from 0deg,#d7d3cc,#f4f1eb 45deg,#bdb8b0 100deg,#e9e5de 160deg,#a9a49c 215deg,#efebe4 280deg,#c4bfb7 330deg,#d7d3cc),
+  repeating-radial-gradient(circle,rgba(255,255,255,.18) 0 1px,rgba(0,0,0,.05) 1px 2px);
+  background-blend-mode:overlay;box-shadow:inset 0 2px 3px rgba(255,255,255,.8),inset 0 -3px 5px rgba(0,0,0,.25),0 0 0 2px #121110}
+.kmarkwrap{position:absolute;inset:11%;border-radius:50%;pointer-events:none}
+.kmark{position:absolute;top:7%;left:50%;width:4px;height:28%;margin-left:-2px;border-radius:2px;background:var(--c1);box-shadow:inset 0 1px 1px rgba(0,0,0,.35)}
+.kstep{width:40px;height:40px;border-radius:50%;border:0;color:#2a2826;font:600 20px var(--mono);cursor:pointer;flex:none;
+  background:radial-gradient(circle at 35% 30%,#fbf8f2,#cdc6ba 70%);box-shadow:0 3px 6px rgba(20,19,18,.25),inset 0 -2px 3px rgba(0,0,0,.15),inset 0 1px 1px #fff}
+.kstep:active{transform:scale(.92);box-shadow:0 1px 2px rgba(20,19,18,.25),inset 0 2px 4px rgba(0,0,0,.2)}
+.khelp{text-align:center;color:var(--muted);margin:0;font-size:9.5px}
 .btn.wide{width:100%;padding:14px}
 .wlog{display:flex;gap:10px;align-items:flex-end}
 .wlog .fld{flex:1}
@@ -464,11 +487,16 @@ function renderOther(V){
     h += '<div class="wstats"><div><span class="mono">7-day avg</span><b>'+(a7!=null?fmtKg(a7):'--')+'</b></div><div><span class="mono">vs last week</span><b>'+(a7!=null&&p7!=null?((a7-p7>=0?'+':'')+fmtKg(a7-p7)):'--')+'</b></div><div><span class="mono">Weigh-ins</span><b>'+WEIGHTS.length+'</b></div></div></section>';
     h += '<div class="card"><div class="exhead"><h3>'+(today?'Update today':'Log today')+'</h3><span class="target">'+fmtShort(todayKey())+'</span></div>';
     if (knobVal == null) { knobVal = today ? today.kg : (latest ? latest.kg : 75); knobCont = knobVal; }
+    h += '<div class="dev"><i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>';
+    h += '<div class="devlabel mono"><span>Body mass</span><span>CB-01 · kg</span></div>';
+    h += '<div class="odo" aria-hidden="true">';
+    [100,10,1].forEach(function(p){ h += '<div class="wheel"><div class="strip" data-p="'+(p*10)+'">'+[0,1,2,3,4,5,6,7,8,9,0].map(function(n){return '<span>'+n+'</span>';}).join('')+'</div></div>'; });
+    h += '<b class="odot">.</b><div class="wheel red"><div class="strip" data-p="1">'+[0,1,2,3,4,5,6,7,8,9,0].map(function(n){return '<span>'+n+'</span>';}).join('')+'</div></div><span class="odounit">kg</span></div>';
     h += '<div class="knobwrap"><button class="kstep" data-act="kstep" data-d="-1" aria-label="Minus 0.1 kg">−</button>';
-    h += '<div class="knob" id="knob" tabindex="0" role="slider" aria-label="Body weight in kg" aria-valuemin="30" aria-valuemax="250" aria-valuenow="'+fmtKg(knobVal)+'"><canvas id="kc"></canvas><i class="kptr"></i>';
-    h += '<div class="kcap"><i class="kgrip" id="kgrip"></i><b id="kval">'+fmtKg(knobVal)+'</b><span>kg</span></div></div>';
+    h += '<div class="knob" id="knob" tabindex="0" role="slider" aria-label="Body weight in kg" aria-valuemin="30" aria-valuemax="250" aria-valuenow="'+fmtKg(knobVal)+'"><canvas id="kc"></canvas><i class="needle"></i>';
+    h += '<div class="kwell"></div><div class="kbody"><div class="knurl kspin"></div><div class="kface"></div><div class="kmarkwrap kspin"><i class="kmark"></i></div></div></div>';
     h += '<button class="kstep" data-act="kstep" data-d="1" aria-label="Plus 0.1 kg">+</button></div>';
-    h += '<p class="khelp mono">Small tick 0.1 · big tick 1 kg</p>';
+    h += '<p class="khelp mono">Fine 0.1 · Coarse 1.0</p></div>';
     h += '<button class="btn primary wide" data-act="logw">'+(today?'Update today':'Log weight')+'</button>';
     h += (message?'<p class="hint" style="margin:0">'+esc(message)+'</p>':'')+'</div>';
     h += '<div class="card"><div class="exhead"><h3>Trend</h3><div class="seg">';
@@ -567,30 +595,40 @@ function drawKnob(){
   if (c.width !== Math.round(S*dpr)) { c.width = Math.round(S*dpr); c.height = Math.round(S*dpr); }
   var ctx = c.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,S,S);
   var cs = getComputedStyle(document.documentElement);
-  var ink = cs.getPropertyValue('--ink').trim() || '#141312', muted = cs.getPropertyValue('--muted').trim() || '#6b655d', acc = cs.getPropertyValue('--c1').trim() || '#2343c9';
-  var cx = S/2, cy = S/2, R = S/2 - 4;
-  ctx.beginPath(); ctx.arc(cx,cy,R-1,0,Math.PI*2); ctx.strokeStyle = 'rgba(20,19,18,.12)'; ctx.lineWidth = 1; ctx.stroke();
+  var ink = cs.getPropertyValue('--ink').trim() || '#141312', acc = cs.getPropertyValue('--c1').trim() || '#2343c9';
+  var cx = S/2, cy = S/2, R = S/2 - 3;
+  ctx.strokeStyle = ink; ctx.globalAlpha = .55; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,R-30,0,Math.PI*2); ctx.stroke();
   var base = Math.floor(knobCont*10);
   for (var j = -32; j <= 32; j++) {
     var idx = base + j;
-    var deg = (knobCont*10 - idx) * 6; // higher values sit to the left; turning clockwise raises the number
+    var deg = (knobCont*10 - idx) * 6;
     if (Math.abs(deg) > 190) continue;
     var a = (deg - 90) * Math.PI/180;
-    var fade = Math.max(0.12, Math.cos(deg*Math.PI/360));
     var major = ((idx % 10) + 10) % 10 === 0, half = ((idx % 5) + 5) % 5 === 0;
-    var len = major ? 22 : half ? 14 : 8;
-    var x1 = cx + Math.cos(a)*(R-6), y1 = cy + Math.sin(a)*(R-6);
-    var x2 = cx + Math.cos(a)*(R-6-len), y2 = cy + Math.sin(a)*(R-6-len);
-    ctx.globalAlpha = fade; ctx.strokeStyle = major ? ink : muted; ctx.lineWidth = major ? 3 : half ? 1.8 : 1.2; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
-    if (major && Math.abs(deg) < 150) {
-      var tx = cx + Math.cos(a)*(R-46), ty = cy + Math.sin(a)*(R-46);
-      ctx.fillStyle = Math.abs(deg) < 3 ? acc : ink; ctx.font = '800 '+(S*0.055).toFixed(0)+'px "Bricolage Grotesque", system-ui, sans-serif';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(String(idx/10), tx, ty);
+    var r1 = R - 3, len = major ? 24 : half ? 15 : 9;
+    ctx.globalAlpha = 0.25 + 0.75*Math.max(0, Math.cos(deg*Math.PI/360));
+    ctx.strokeStyle = ink; ctx.lineWidth = major ? 2.4 : half ? 1.5 : 1; ctx.lineCap = 'butt';
+    ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*r1, cy+Math.sin(a)*r1); ctx.lineTo(cx+Math.cos(a)*(r1-len), cy+Math.sin(a)*(r1-len)); ctx.stroke();
+    if (major && Math.abs(deg) < 170) {
+      var tr = R - 44, tx = cx + Math.cos(a)*tr, ty = cy + Math.sin(a)*tr;
+      ctx.save(); ctx.translate(tx,ty); ctx.rotate(a + Math.PI/2);
+      ctx.fillStyle = Math.abs(deg) < 3 ? acc : ink;
+      ctx.font = '500 '+Math.round(S*0.042)+'px "JetBrains Mono", ui-monospace, monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(String(idx/10), 0, 0); ctx.restore();
     }
   }
   ctx.globalAlpha = 1;
-  var g = document.getElementById('kgrip'); if (g) g.style.transform = 'rotate('+((knobCont*60) % 360).toFixed(2)+'deg)';
+  var rot = 'rotate('+((knobCont*60) % 360).toFixed(2)+'deg)';
+  document.querySelectorAll('.kspin').forEach(function(el){ el.style.transform = rot; });
+  var t = knobCont*10;
+  document.querySelectorAll('.odo .strip').forEach(function(st){
+    var p = +st.getAttribute('data-p'); var d = Math.floor(t/p) % 10; var rem = t % p;
+    if (p === 1) d = rem = t % 10; else if (rem > p-1) d += rem-(p-1);
+    st.style.transform = 'translateY('+(-d*100/11).toFixed(3)+'%)';
+    st.parentNode.classList.toggle('lead', p===1000 && t < 1000);
+  });
 }
 function setupKnob(){
   var k = document.getElementById('knob'); if (!k) return;
