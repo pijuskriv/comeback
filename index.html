@@ -630,6 +630,30 @@ function drawKnob(){
     st.parentNode.classList.toggle('lead', p===1000 && t < 1000);
   });
 }
+
+/* Knob physics. Coast: light friction plus a faint detent ripple every 0.1 kg.
+   Capture: once it slows down, a damped spring pulls it into the notch it is heading for,
+   with a touch of overshoot, so it lands like a real detented knob. Position and speed stay continuous. */
+var KP = {P:0.1, w0:0.05, coast:0.0038, vCap:0.0004, z:0.55};
+function knobPhysics(target){
+  if (kRaf) { cancelAnimationFrame(kRaf); kRaf = null; }
+  var x = knobCont, v = kVel, prev = performance.now(), tgt = target, z = target != null ? 0.8 : KP.z;
+  var K = 0.3*KP.w0*KP.w0*KP.P/(2*Math.PI);
+  function step(t){
+    var dt = Math.min(48, t - prev); prev = t;
+    for (var n = Math.max(1, Math.ceil(dt/2)), h = dt/n, i = 0; i < n; i++) {
+      if (tgt == null && Math.abs(v) < KP.vCap) tgt = Math.min(250, Math.max(30, Math.round((x + v*15)*10)/10));
+      var acc = tgt != null ? -KP.w0*KP.w0*(x - tgt) - 2*z*KP.w0*v : -K*Math.sin(2*Math.PI*x/KP.P) - KP.coast*v;
+      v += acc*h; x += v*h;
+      if (x < 30 || x > 250) { x = Math.min(250, Math.max(30, x)); v = 0; }
+    }
+    kVel = v;
+    if (tgt != null && Math.abs(v) < 0.00001 && Math.abs(x - tgt) < 0.0015) { kVel = 0; knobSet(tgt, true); kRaf = null; return; }
+    knobSet(x, true);
+    kRaf = requestAnimationFrame(step);
+  }
+  kRaf = requestAnimationFrame(step);
+}
 function setupKnob(){
   var k = document.getElementById('knob'); if (!k) return;
   knobCont = knobVal; drawKnob();
@@ -651,24 +675,18 @@ function setupKnob(){
   function release(){
     if (!drag) return; drag = null; k.classList.remove('grab');
     if (performance.now() - lastT > 80) kVel = 0;
-    var prev = performance.now();
-    (function spin(t){
-      var dt = Math.min(40, t - prev); prev = t;
-      if (Math.abs(kVel) < 0.00004) { knobSet(Math.round(knobCont*10)/10, false); kRaf = null; return; }
-      knobSet(knobCont + kVel*dt, true); kVel *= Math.pow(0.93, dt/16);
-      kRaf = requestAnimationFrame(spin);
-    })(prev);
+    knobPhysics(null);
   }
   k.addEventListener('pointerup', release); k.addEventListener('pointercancel', release);
   k.addEventListener('keydown', function(e){
     var step = {ArrowUp:0.1, ArrowRight:0.1, ArrowDown:-0.1, ArrowLeft:-0.1, PageUp:1, PageDown:-1}[e.key];
-    if (step) { e.preventDefault(); knobSet(Math.round((knobVal + step)*10)/10, true); }
+    if (step) { e.preventDefault(); knobPhysics(Math.round((knobVal + step)*10)/10); }
   });
 }
 document.addEventListener('click', function(ev){
   var b = ev.target.closest('[data-act="kstep"]'); if (!b) return;
   if (kRaf) { cancelAnimationFrame(kRaf); kRaf = null; }
-  knobSet(Math.round((knobVal + 0.1*(+b.getAttribute('data-d')))*10)/10, true);
+  knobPhysics(Math.round((knobVal + 0.1*(+b.getAttribute('data-d')))*10)/10);
 });
 window.addEventListener('resize', drawKnob);
 
